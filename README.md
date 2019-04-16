@@ -137,6 +137,13 @@ if not empty
    4. Log in to Heroku from terminal
    `$ heroku login`
    5. Add git remote branch to project point to Heroku's servers
-   `heroku create`
-   6. Push project to Heroku remote branch
+   `$ heroku create`
+   6. Push project to Heroku remote branch, might need to add / commit again
    `$ git push heroku master`
+      1. Might need to update yarn lockfile
+      ```
+      $ yarn install
+      $ git add yarn.lock
+      $ git commit -m "Updated Yarn lockfile"
+      $ git push heroku master
+      ```
