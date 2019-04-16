@@ -1,5 +1,8 @@
 # Calculator
 ## This is a take home project given by interviewer, user React to build a simple calculator in 1 week.
+- [Github link](https://github.com/fruit13ok/calculator).
+- [Heroku link](https://yicalculator.herokuapp.com/).
+- ![login landing page](./calculator.png)
 
 ### outline
 Basic calculator has 17 components<br>
@@ -147,3 +150,5 @@ if not empty
       $ git commit -m "Updated Yarn lockfile"
       $ git push heroku master
       ```
+   7. Rename project
+   `heroku apps:rename yicalculator`
