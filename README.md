@@ -123,3 +123,20 @@ if not empty
 23. Implement negative input, add button '(-)' and '.', add conditions.
 24. Refactored the long onButtonPressed() function with helper functions, and variable.
 25. Added css for font size, input field, and buttons.
+26. Deploy to Heroku
+   1. Push the complete version to Github
+   2. Check Node and NPM version
+   `$ node --version` and `$ npm --version`
+   3. Tell Heroku project version of Node and NPM, edit `package.json` with<br>
+   ```
+   "engines": {
+      "node": "10.7.0",
+      "npm": "6.2.0"
+   },
+   ```
+   4. Log in to Heroku from terminal
+   `$ heroku login`
+   5. Add git remote branch to project point to Heroku's servers
+   `heroku create`
+   6. Push project to Heroku remote branch
+   `$ git push heroku master`
