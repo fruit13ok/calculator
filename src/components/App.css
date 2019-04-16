@@ -5,70 +5,106 @@
     align-items: center;
 }
 
+input {
+    font-size: 3em;
+}
+
+button {
+    height: 10vh;
+    border-radius: 20%;
+    font-size: 3em;
+}
+
 .wrapper {
     display: grid;
     width: 60%;
     margin: 0 auto;
     grid-gap: 10px;
-    grid-template-rows: 1fr 1fr 1fr 1fr 1fr;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
-    grid-template-areas:
-        "inputDisplay inputDisplay inputDisplay inputDisplay"
+    
+    grid-template-areas: "inputDisplay inputDisplay inputDisplay inputDisplay"
         "btn1 btn2 btn3 btnAdd"
         "btn4 btn5 btn6 btnSubtract"
         "btn7 btn8 btn9 btnMultiply"
-        "btn0 btnEqual btnDelete btnDivide";
+        "btn0 btnDecimal btnNegative btnDivide"
+        "btnEqual btnEqual btnEqual btnDelete";
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr;
+    
 }
 
 .inputDisplay{
     grid-area: inputDisplay;
-    background-color: lightgrey;
+    background-color: #C2C5BB;
 }
 .btn0 {
     grid-area: btn0;
+    background-color: #FFCAB1;
 }
 .btn1 {
     grid-area: btn1;
+    background-color: #FFCAB1;
 }
 .btn2 {
     grid-area: btn2;
+    background-color: #FFCAB1;
 }
 .btn3 {
     grid-area: btn3;
+    background-color: #FFCAB1;
 }
 .btn4 {
     grid-area: btn4;
+    background-color: #FFCAB1;
 }
 .btn5 {
     grid-area: btn5;
+    background-color: #FFCAB1;
 }
 .btn6 {
     grid-area: btn6;
+    background-color: #FFCAB1;
 }
 .btn7 {
     grid-area: btn7;
+    background-color: #FFCAB1;
 }
 .btn8 {
     grid-area: btn8;
+    background-color: #FFCAB1;
 }
 .btn9 {
     grid-area: btn9;
+    background-color: #FFCAB1;
 }
 .btnAdd {
     grid-area: btnAdd;
+    background-color: #9AADBF;
 }
 .btnSubtract {
     grid-area: btnSubtract;
+    background-color: #9AADBF;
 }
 .btnMultiply {
     grid-area: btnMultiply;
+    background-color: #9AADBF;
 }
 .btnDivide {
     grid-area: btnDivide;
+    background-color: #9AADBF;
+}
+.btnNegative {
+    grid-area: btnNegative;
+    background-color: #9AADBF;
+}
+.btnDecimal {
+    grid-area: btnDecimal;
+    background-color: #9AADBF;
 }
 .btnEqual {
     grid-area: btnEqual;
+    background-color: #8CC084;
 }
 .btnDelete {
     grid-area: btnDelete;
+    background-color: lightpink;
 }

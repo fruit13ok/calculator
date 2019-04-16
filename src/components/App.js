@@ -15,36 +15,65 @@ class App extends React.Component {
             curExpression: []
         };
     }
+    // 3 helper functions to manipulate array base on input
+    addNewEleToCurExpr = (str) =>{
+        this.setState({curExpression: this.state.curExpression.concat(str)});
+    }
+    setLastEleCurExpr = (str) =>{
+        let tempArr = this.state.curExpression.slice();
+        tempArr[tempArr.length-1]=tempArr[tempArr.length-1]+str;
+        this.setState({curExpression: tempArr});
+    }
+    removeLastEleCurExpr = () => {
+        this.setState({curExpression: this.state.curExpression.slice(0,this.state.curExpression.length-1)});
+    }
     // lifting state up from ButtonComponent's text to update this curExpression
     // a list of conditions to keep the input math expression valid.
     onButtonPressed = (text) =>{
+        let lastElement = this.state.curExpression[this.state.curExpression.length-1];
         if(this.state.curExpression.length === 0){
+            if(text === '.'){
+                this.addNewEleToCurExpr('0.');
+            }else 
             if(text.match(/[1-9]/)){
-                this.setState({curExpression: this.state.curExpression.concat(text)});
+                this.addNewEleToCurExpr(text);
+            }else if(text === '(-)'){
+                this.addNewEleToCurExpr('(-1)*');
             }
         }else{
-            if(this.state.curExpression[this.state.curExpression.length-1].match(/[0-9]/)){
+            if(lastElement === '.'){
                 if(text.match(/[0-9]/)){
-                    let tempArr = this.state.curExpression.slice();
-                    tempArr[tempArr.length-1]=tempArr[tempArr.length-1]+text;
-                    this.setState({curExpression: tempArr});
+                    this.setLastEleCurExpr(text);
+                }
+            }else if(lastElement === '(-1)*'){
+                if(text === '.'){
+                    this.addNewEleToCurExpr('0.');
+                }else if(text.match(/[0-9]/)){
+                    this.addNewEleToCurExpr(text);
+                }
+            }else if(lastElement.match(/[0-9]/)){
+                if(text === '.'){
+                    if(!lastElement.match(/\./)){
+                        this.setLastEleCurExpr(text);
+                    }
+                }else if(text.match(/[0-9]/)){
+                    this.setLastEleCurExpr(text);
                 }else if(text.match(/^(\+|-|\*|\/)$/)){
-                    this.setState({curExpression: this.state.curExpression.concat(text)});
+                    this.addNewEleToCurExpr(text);
                 }else if(text === '='){
                     let tempArr = [];
                     tempArr.push(eval(this.state.curExpression.join('')).toString());
                     this.setState({curExpression: tempArr});
-                }else if(text === 'DELETE'){
-                    this.setState({curExpression: this.state.curExpression.slice(0,this.state.curExpression.length-1)});
                 }
-            }else if(this.state.curExpression[this.state.curExpression.length-1].match(/^(\+|-|\*|\/)$/)){
-                if(text.match(/[0-9]/)){
-                    this.setState({curExpression: this.state.curExpression.concat(text)});
+            }else if(lastElement.match(/^(\+|-|\*|\/)$/)){
+                if(text === '(-)'){
+                    this.addNewEleToCurExpr('(-1)*');
+                }else if(text.match(/[1-9]|\./)){
+                    this.addNewEleToCurExpr(text);
                 }
-                //ignore text.match(/^(\+|-|\*|\/|=)$/)
-                else if(text === 'DELETE'){
-                    this.setState({curExpression: this.state.curExpression.slice(0,this.state.curExpression.length-1)});
-                }
+            }
+            if(text === 'DELETE'){
+                this.removeLastEleCurExpr();
             }
         }
         if(this.state.curExpression){
@@ -55,26 +84,27 @@ class App extends React.Component {
         return (
             <div className="app-center">
                 <h1>Basic Calculator</h1>
-                <h4>To input click on the available numbers or opterators. This calculator on calculate integer input. Future upgrade will include decimal input.</h4>
-                {/* the order of components is necessary for grid */}
+                <h4>To input click on the available numbers or opterators. Invalid input will be ignore.</h4>
                 <div className='wrapper'>
                     <input className="inputDisplay" type="text" value={this.state.curExpression.join('')} disabled={true} />
-                    <ButtonComponent text="1" color="lightyellow" onButtonPressed={this.onButtonPressed}/>
-                    <ButtonComponent text="2" color="lightyellow" onButtonPressed={this.onButtonPressed}/>
-                    <ButtonComponent text="3" color="lightyellow" onButtonPressed={this.onButtonPressed}/>
-                    <ButtonComponent text="+" color="lightblue" onButtonPressed={this.onButtonPressed}/>
-                    <ButtonComponent text="4" color="lightyellow" onButtonPressed={this.onButtonPressed}/>
-                    <ButtonComponent text="5" color="lightyellow" onButtonPressed={this.onButtonPressed}/>
-                    <ButtonComponent text="6" color="lightyellow" onButtonPressed={this.onButtonPressed}/>
-                    <ButtonComponent text="-" color="lightblue" onButtonPressed={this.onButtonPressed}/>
-                    <ButtonComponent text="7" color="lightyellow" onButtonPressed={this.onButtonPressed}/>
-                    <ButtonComponent text="8" color="lightyellow" onButtonPressed={this.onButtonPressed}/>
-                    <ButtonComponent text="9" color="lightyellow" onButtonPressed={this.onButtonPressed}/>
-                    <ButtonComponent text="*" color="lightblue" onButtonPressed={this.onButtonPressed}/>
-                    <ButtonComponent text="0" color="lightyellow" onButtonPressed={this.onButtonPressed}/>
-                    <ButtonComponent text="=" color="lightgreen" onButtonPressed={this.onButtonPressed}/>
-                    <ButtonComponent text="DELETE" color="lightpink" onButtonPressed={this.onButtonPressed}/>
-                    <ButtonComponent text="/" color="lightblue" onButtonPressed={this.onButtonPressed}/>
+                    <ButtonComponent cssStyle="btn1" text="1" onButtonPressed={this.onButtonPressed}/>
+                    <ButtonComponent cssStyle="btn2" text="2" onButtonPressed={this.onButtonPressed}/>
+                    <ButtonComponent cssStyle="btn3" text="3" onButtonPressed={this.onButtonPressed}/>
+                    <ButtonComponent cssStyle="btn4" text="4" onButtonPressed={this.onButtonPressed}/>
+                    <ButtonComponent cssStyle="btn5" text="5" onButtonPressed={this.onButtonPressed}/>
+                    <ButtonComponent cssStyle="btn6" text="6" onButtonPressed={this.onButtonPressed}/>
+                    <ButtonComponent cssStyle="btn7" text="7" onButtonPressed={this.onButtonPressed}/>
+                    <ButtonComponent cssStyle="btn8" text="8" onButtonPressed={this.onButtonPressed}/>
+                    <ButtonComponent cssStyle="btn9" text="9" onButtonPressed={this.onButtonPressed}/>
+                    <ButtonComponent cssStyle="btn0" text="0" onButtonPressed={this.onButtonPressed}/>
+                    <ButtonComponent cssStyle="btnAdd" text="+" onButtonPressed={this.onButtonPressed}/>
+                    <ButtonComponent cssStyle="btnSubtract" text="-" onButtonPressed={this.onButtonPressed}/>
+                    <ButtonComponent cssStyle="btnMultiply" text="*" onButtonPressed={this.onButtonPressed}/>
+                    <ButtonComponent cssStyle="btnDivide" text="/" onButtonPressed={this.onButtonPressed}/>
+                    <ButtonComponent cssStyle="btnDecimal" text="." onButtonPressed={this.onButtonPressed}/>
+                    <ButtonComponent cssStyle="btnNegative" text="(-)" onButtonPressed={this.onButtonPressed}/>
+                    <ButtonComponent cssStyle="btnEqual" text="=" onButtonPressed={this.onButtonPressed}/>
+                    <ButtonComponent cssStyle="btnDelete" text="DELETE" onButtonPressed={this.onButtonPressed}/>
                 </div>
             </div>
         );
